@@ -22,23 +22,3 @@ const getExpress = () => {
 module.exports = {
     getExpress
 }
-
-
-
-
-
-
-
-
-// app.post("/usuarios",function(peticion,respuesta){
-//     console.log(peticion.body)
-//     respuesta.send("Método POST");
-// })
-
-// app.put("/",function(peticion,respuesta){
-//     respuesta.send("Método PUT");
-// })
-
-// app.delete("/",function(peticion,respuesta){
-//     respuesta.send("Método DELETE");
-// })
