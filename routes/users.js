@@ -1,50 +1,46 @@
-const express           = require("express")
-const { conexionMySQL } = require('../config/conexion');
+const express  = require("express")
+const view     = require("../helpers/views")
+const database = require("../config/database")
+const User     = require("../models/user")
 
-const conexion = conexionMySQL();
-
-const router   = express.Router();
+const router   = express.Router()
 
 
-router.get("/users",function(req,res){
-    conexion.query('SELECT * FROM users', function (error, results, fields) {
-
-        if (error != null){
-            res.json({
-                message:error.sqlMessage
-            })
-        }
-        res.json(results);
-    });
-    
-})
-
-router.get("/login",(req,res) => {
-    const user     = req.body.user;
-    const password = req.body.password;
-    if(user == 'admin' && password == '12345'){
-        res.json({
-            message:'Autenticación Exitosa!'
-        });
-    }else{
-        res.json({
-            message:'INGRESE CORRECTAMENTE SUS CREDENCIALES'
-        });
+router.get("/users", async function(req,res){
+    try{
+        const results = await database.query("SELECT * FROM users")
+        res.render('listado.ejs',{results});
+    }catch(error){
+        return res.json({ error:true, message:error })
     }
+});
+
+router.get("/login",function(req,res){
+    res.json({
+        ruta:"login"
+    })
+})
+router.get("/registro",(req,res) => {
+    return view("registro.ejs",res)
 })
 
-router.post("/registro",function(req,res){
-    
-    const body = req.body
+router.post("/registro",async (req,res) => {
 
-    conexion.query(
-        "INSERT INTO users(??) VALUES(?) ",
-        [Object.keys(body),Object.values(body)]
-    )
+    const user       = new User(req.body);
+    const validation = user.validate();
 
-    return res.json({message:"SUCCESS"})
+    if(validation.validated){
+        return res.json(await user.save())
+    }
 
+    return res.json(validation)
 })
+
+router.post("/user/auth",async (req,res) => {
+    res.json({
+        ruta:"Verificacion de usuario"
+    })
+});
 
 
 module.exports = router // Exportando
