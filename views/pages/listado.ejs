@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+    <header>
+        <%- include('../partials/header',{ active:'active' }); %>
+    </header>
+
+    <div class="container-fluid">
+
+        <main>
+            <div class="container">
+                <a href="/registro" class="btn btn-outline-primary mt-4"><i class='bx bxs-plus-circle'></i> Nuevo</a>
+                <table class="table table-bordered border-primary text-center table-sm mt-4">
+                    <thead>
+                        <tr class="">
+                            <th>ID</th>
+                            <th>USUARIO</th>
+                            <th>EMAIL</th>
+                            <th>PASSWORD</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% results.forEach((user)=> { %>
+                            <tr>
+                                <td>
+                                    <%= user.id %>
+                                </td>
+                                <td>
+                                    <%= user.name %>
+                                </td>
+                                <td>
+                                    <%= user.email %>
+                                </td>
+                                <td>
+                                    <%= user.password %>
+                                </td>
+                                <td>
+                                    <a href="/edit/<%= user.id %>" class="btn btn-outline-warning btn-sm"> <i
+                                            class='bx bx-edit'></i> </a>
+                                    <a href="/delete/<%= user.id %>" class="btn btn-outline-danger btn-sm"> <i
+                                            class='bx bxs-trash'></i> </a>
+                                </td>
+                            </tr>
+
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+    </div>
+
+
+
+    <%- include('../partials/scripts'); %>
+</body>
+
+</html>

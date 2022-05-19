@@ -5,10 +5,13 @@ const path = require("path") // path: nos permite admistrar rutas de archivos
 const express = require("express")
 const port = 4000
 
+
 //Importando router
 const users = require("./routes/users") // También podemos usar: require("./routes/users.js")
 
 const app = express()
+// Motor de plantilla de express
+app.set('view engine', 'ejs');
 
 
 //Sección para los middleware
@@ -22,8 +25,8 @@ app.use(users) // Usando un router
 
 // req: request(peticion) y res: response(respuesta)
 app.get("/",function(req,res){
-    console.log(__dirname) // Ubicación o ruta de nuestro proyecto
-    return res.sendFile(path.join(__dirname,"views","index.ejs"))
+    res.render('pages/layout');
+    //return res.sendFile(path.join(__dirname,"views","index.ejs"))
 })
 
 app.listen(port,()=>{

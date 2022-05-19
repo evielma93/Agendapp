@@ -9,7 +9,7 @@ const router   = express.Router()
 router.get("/users", async function(req,res){
     try{
         const results = await database.query("SELECT * FROM users")
-        res.render('listado.ejs',{results});
+        res.render('pages/listado.ejs',{results});
     }catch(error){
         return res.json({ error:true, message:error })
     }
@@ -21,7 +21,7 @@ router.get("/login",function(req,res){
     })
 })
 router.get("/registro",(req,res) => {
-    return view("registro.ejs",res)
+    res.render('pages/registro');
 })
 
 router.post("/registro",async (req,res) => {
@@ -32,7 +32,6 @@ router.post("/registro",async (req,res) => {
     if(validation.validated){
         return res.json(await user.save())
     }
-
     return res.json(validation)
 })
 

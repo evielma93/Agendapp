@@ -6,15 +6,15 @@ class User{
     constructor(data){
         this.name     = data.name
         this.email    = data.email
-        this.username = data.username
-        this.birthday = data.birthday
+        // this.username = data.username
+        // this.birthday = data.birthday
         this.password = data.password
         this.data     = data
     }
 
     validate(){
 
-        if(!(this.email && this.name && this.birthday && this.username && this.password)){
+        if(!(this.email && this.name && this.password)){
             return {
                 message:"Debes completar todos los campos",
                 validated:false
@@ -29,8 +29,6 @@ class User{
             name:this.name,
             email:this.email,
             password: await this.encrypt(this.password),
-            username:this.username,
-            birthday:this.birthday
         }
         try {
             const result = await database.query(
