@@ -5,9 +5,9 @@ const path = require("path") // path: nos permite admistrar rutas de archivos
 const express = require("express")
 const port = 4000
 
-
 //Importando router
-const users = require("./routes/users") // También podemos usar: require("./routes/users.js")
+const users    = require("./routes/users"); // También podemos usar: require("./routes/users.js")
+const calendar = require("./routes/calendar"); 
 
 const app = express()
 // Motor de plantilla de express
@@ -20,13 +20,12 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Sección de codigo para los router
-app.use(users) // Usando un router
+app.use(users) 
+app.use(calendar) 
 
 
-// req: request(peticion) y res: response(respuesta)
 app.get("/",function(req,res){
     res.render('pages/layout');
-    //return res.sendFile(path.join(__dirname,"views","index.ejs"))
 })
 
 app.listen(port,()=>{

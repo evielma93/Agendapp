@@ -1,5 +1,4 @@
 const express  = require("express")
-const view     = require("../helpers/views")
 const database = require("../config/database")
 const User     = require("../models/user")
 
