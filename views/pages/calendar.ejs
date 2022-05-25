@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('../partials/head'); %>
+        <link href='fullcalendar/main.css' rel='stylesheet' />
 </head>
 
 <body>
@@ -11,17 +13,53 @@
     </header>
 
     <div class="container-fluid">
-
-        <main>
-            <div class="container">
-
-            </div>
-        </main>
+        <%- include('modals/registroEvento'); %>
+            <%- include('modals/editEvent'); %>
+                <main>
+                    <div class="container">
+                        <div id='calendar'></div>
+                    </div>
+                </main>
 
     </div>
 
 
     <%- include('../partials/scripts'); %>
+        <script src='fullcalendar/main.js'></script>
+        <script>
+            let createEventModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            let editionEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+            let result = JSON.parse('<%- JSON.stringify(results) %>'); console.log(result);
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    dateClick: function (info) {
+                        console.log(info);
+                        document.getElementById('date').value = info.dateStr;
+                        document.getElementById('exampleModalLabel').textContent = 'Registrar Evento';
+                        createEventModal.show();
+                    },
+                    events: result,
+                    eventClick: function (info) {
+                        console.log(info);
+                        console.log(info.el.fcSeg.eventRange.range.end);
+                        let newDate = info.el.fcSeg.eventRange.range.end;
+                        console.log(newDate.toISOString()); 
+                        document.querySelector('#eventId').value = info.event._def.extendedProps.id_evento;
+                        document.querySelector('#title').value = info.event.title;
+                        document.querySelector('#editDescription').value = info.event._def.extendedProps.description;
+                        document.querySelector('#editColor').value = info.event.backgroundColor;
+                        document.querySelector('#editDate').value = info.el.fcSeg.eventRange.range.end; // el.fcSeg.eventRange.range.end "2022-05-26T00:00:00.000Z"
+                        document.querySelector('#editUser').value = info.el.fcSeg.eventRange.def.extendedProps.user;
+                        document.querySelector('#eventId').value = info.el.fcSeg.eventRange.def.publicId;
+                        editionEventModal.show();
+                    }
+                });
+                calendar.render();
+            });
+
+        </script>
 </body>
 
 </html>

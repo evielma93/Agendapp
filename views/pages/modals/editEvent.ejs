@@ -1,38 +1,38 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> </h5>
+        <h5 class="modal-title" id="editEventLabel"> </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="formulario" action="/createEvent" method="post">
+      <form id="formulario" action="/editEvent" method="post">
         <div class="modal-body">
 
           <div class="mb-3">
             <label for="name" class="form-label pb-2">Evento</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-
+            <input type="text" class="form-control" id="title" name="name" required>
+            <input type="hidden" id="eventId" name="id" >
           </div>
 
           <div class="mb-3">
             <label for="description" class="form-label pb-2">Descripción</label>
-            <input type="text" class="form-control" id="description" name="description" required>
+            <input type="text" class="form-control" id="editDescription" name="description" required>
           </div>
 
 
           <div class="mb-3">
             <label for="date" class="form-label pb-2">Fecha</label>
-            <input type="date" class="form-control" id="date" name="date">
+            <input type="date" class="form-control" id="editDate" name="date">
           </div>
 
           <div class="mb-3">
             <label for="color" class="form-label pb-2">Color</label>
-            <input type="color" class="form-control" id="color" name="color">
+            <input type="color" class="form-control" id="editColor" name="color">
           </div>
 
           <div class="mb-3">
             <label for="inputUsuaruo" class="col-sm-2 col-form-label">Usuario</label>
-            <select class="form-control" name="user" id="user">
+            <select class="form-control" name="user" id="editUser">
               <% users.forEach((user)=> { %>
                 <option value="<%= user.id %>">
                   <%= user.name %>
@@ -46,7 +46,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-          <button class="btn btn-primary" type="submit">Registrar</button>
+          <button class="btn btn-primary" type="submit">Editar</button>
         </div>
       </form>
 
